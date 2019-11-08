@@ -3,6 +3,7 @@ package dibujar;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.event.MouseAdapter;
@@ -10,8 +11,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  *
@@ -22,6 +25,7 @@ public class DibujarRectangulos extends JComponent {
     private Point inicioArrastre;
     private Point finArrastre;
     private ArrayList<Shape> rectangulos = new ArrayList<Shape>();
+    private Image imagen;
 
     public DibujarRectangulos() {
         super();
@@ -51,6 +55,13 @@ public class DibujarRectangulos extends JComponent {
     }
 
     public void paint(Graphics g) {
+        super.paint(g);
+        String nombreImagen = "region_if.png";     
+            imagen = new ImageIcon(
+                   getClass().getResource(nombreImagen)
+                   ).getImage();
+        g.drawImage(imagen, 0, 0, getWidth(), getHeight(),this);
+        setOpaque(false);
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.RED);
         for (Shape rectangulo : rectangulos) { // dibuja todos los rectangulos
@@ -68,7 +79,7 @@ public class DibujarRectangulos extends JComponent {
     }
 
     public static void main(String[] a3d) {
-        JFrame ventana = new JFrame("Dibujar Rectangulos");
+        JFrame ventana = new JFrame();
         ventana.setSize(400, 300);
         ventana.setLocationRelativeTo(null);
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
